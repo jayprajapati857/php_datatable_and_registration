@@ -3,16 +3,15 @@
 <head>
 	<meta charset="utf-8">
 	<title>Datatable UI</title>
-	<link rel='stylesheet' type='text/css' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
-	<link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css' />
-	<link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css' />
-    <!-- <link rel='stylesheet' type='text/css' href='http://www.trirand.com/blog/jqgrid/themes/ui.jqgrid.css' /> -->
-	
-	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>	
-	<script type='text/javascript' src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js'></script>
-	<script type='text/javascript' src='https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js'></script>
-	<script type='text/javascript' src='https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js'></script>
-	<script type='text/javascript' src='https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js'></script>
+	<link rel='stylesheet' type='text/css' href='css/bootstrap.min.css' />
+	<link rel='stylesheet' type='text/css' href='css/dataTables.bootstrap.min.css' />
+	<link rel='stylesheet' type='text/css' href='css/responsive.bootstrap.min.css' />
+    	
+	<script src="js/jquery-3.3.1.js"></script>	
+	<script type='text/javascript' src='js/jquery.dataTables.min.js'></script>
+	<script type='text/javascript' src='js/dataTables.bootstrap.min.js'></script>
+	<script type='text/javascript' src='js/dataTables.responsive.min.js'></script>
+	<script type='text/javascript' src='js/responsive.bootstrap.min.js'></script>
     
 	
 	<script>
