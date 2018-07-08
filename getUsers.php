@@ -30,13 +30,14 @@ $limit = $_POST['length'];
 // $start = $limit*$page - $limit;
 // if($start <0) $start = 0; 
 
-$SQL = "SELECT * FROM user_master where dead = 0 and hidden = 0 and active = 1 and blocked = 0 ". (($searchFor != '') ? "and concat(profile_display_name,first_name,last_name,user_address,user_email,phone_number,blood_group,available_time,type_of_service) like '%". $searchFor ."%'":"") ." ORDER BY $orderBy $orderDirection LIMIT $start , $limit"; 
+$SQL = "SELECT *, (SELECT count(*) from user_master where dead = 0 and hidden = 0 and active = 1 and blocked = 0 ) as cnt FROM user_master where dead = 0 and hidden = 0 and active = 1 and blocked = 0 ". (($searchFor != '') ? "and concat(profile_display_name,first_name,last_name,user_address,user_email,phone_number,blood_group,available_time,type_of_service) like '%". $searchFor ."%'":"") ." ORDER BY $orderBy $orderDirection LIMIT $start , $limit"; 
 $result = mysqli_query($conn, $SQL ) or die("Couldn't execute query.".mysqli_error($conn)); 
-$count = mysqli_num_rows($result);
+$totalRowsFetched = mysqli_num_rows($result);
+$count = 0;
 $i=0;
-if($count > 0)
+if($totalRowsFetched > 0)
 {
-	while($row = mysqli_fetch_array($result)) {
+	while($row = mysqli_fetch_array($result)) {		
 		$response->data[$i] = array(
 									'user_id'=>$row['user_id'],
 									'profile_display_name'=>$row['profile_display_name'],
@@ -50,7 +51,11 @@ if($count > 0)
 									'type_of_service'=>$row['type_of_service'],
 									'profile_img_path'=>$row['profile_img_path']
 								);	
-		$i++;
+		if($row['cnt'] > 0) 
+		{
+			$count = $row['cnt'];
+		}
+		$i++;		
 	}
 }
 else

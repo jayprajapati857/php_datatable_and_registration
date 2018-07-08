@@ -22,9 +22,10 @@
 			"jQueryUI": true,
 			"ordering": true,
 			"searching": true,
+			"responsive":true,
 			"order": [[2, 'asc']],//set column 1 (time)
 			"ajax": {
-				url: "getGridData.php",
+				url: "getUsers.php",
 				type: 'POST',
 				dataSrc: "data",
 				error: function(){  // error handling
@@ -44,6 +45,13 @@
 				{ "title": "Blood Group", "data":"blood_group" },
 				{ "title": "Available Time", "data":"available_time" },
 				{ "title": "Type Of Service", "data":"type_of_service" }
+			],
+			"columnDefs": [
+				{ "targets": 0,
+				"render": function(data) {
+					return '<a href=""><img src="'+data+'" height="80px" width="80px"></a>'
+				}
+				}   
 			]				
 		}); 	
 	});
@@ -51,7 +59,11 @@
 </head>
 
 <body style="padding:25px !important; ">
-<table id="list_records" class="table table-bordered"></table> 
+<div class="row">
+	<div class="col-xs-12">
+		<table id="list_records" class="table table-striped table-bordered"></table> 
+	</div>	
+</div>
 <div id="perpage"></div>
 </body>
 </html>
