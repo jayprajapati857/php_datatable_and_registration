@@ -4,4 +4,4 @@
 *.jpeg
 
 # excluding profile profile_pictures
-#profile_pictures/
+profile_pictures/
