@@ -1,7 +1,7 @@
 <?php 
 //error_reporting(E_WARNING | E_NOTICE | E_DEPRECATED);
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
-$conn = mysqli_connect("localhost", "root", "FaNG4cY", "jatinsfoundation") or die("Connection Error: " . mysqli_error($conn)); 
+include 'conn.php';
 
 $draw = intval( $_REQUEST['draw'] ); //Draw counter. This is used by DataTables to ensure that the Ajax returns from server-side processing requests are drawn in sequence by DataTables(Ajax requests are asynchronous and thus can return out of sequence).
 $searchFor = !empty($_POST['search']['value']) ? $_POST['search']['value'] : ''; // global serach value
