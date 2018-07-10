@@ -13,6 +13,18 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      .errMsg
+      {
+        color:red;
+        padding-top:15px;        
+      }
+      .errBorder
+      {
+        border-style: solid;
+        border-color: red;
+      }
+    </style>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,167 +37,204 @@
     <div>
     <div class="col-xs-12">
     <?php 
-	if(isset($_POST['SUBMIT']) && $_POST['SUBMIT']=='REGISTER')
-	{
-		$profile_name=trim($_POST['profile_name']);
-    $first_name=trim($_POST['first_name']);
-    $last_name=trim($_POST['last_name']);		
-		$email=trim($_POST['email']);
-		$pwd=trim($_POST['pwd']);
-    $cpwd=trim($_POST['cpwd']);
-    $addr=trim($_POST['addr']);		
-		$num=trim($_POST['num']);
-		$blood_group = trim($_POST['blood_group']);
-    $avail_time = trim($_POST['avail_time']);
-    $type_of_service = trim($_POST['type_of_service']);
-
-		$error=array();
-    if($profile_name=="")
-		{
-			$error['profile_name']="Enter Profile Name";
-		}
-    else if($first_name=="")
-		{
-			$error['first_name']="Enter First Name";
-		}
-		else if($last_name=="")
-		{
-			$error['last_name']="Enter Last Name";
-    }
-    else if($email=="")
-		{   
-      $error['email']="Please Enter Email";   
-    }	
-    // else if($email != "")
-		// 	{	$sel="SELECT * FROM user_master WHERE user_email='$email'";
-		// 		$res=mysql_query($sel);
-		// 		$row=mysql_num_rows($res);
-		// 		if($row)
-		// 		{
-		// 			echo "<script>alert('email exist');</script>";
-		// 		}
-		// 	}
-    else if($pwd=="")
-		{      
-			$error['pwd']="Plese Enter Password";
-		}
-		else if($addr=="")
-		{
-      echo 'addre';
-			$error['addr']="Enter Address";
-		}
-		else if($num=="")
-		{
-			$error['num']="Plese Enter Phone number";
-		}
-    else if($blood_group == "")
-    {
-      $error['blood_group']="Plese Enter blood Group";
-    }
-    else if($avail_time == "")
-    {
-      $error['avail_time']="Plese Enter Available time";      
-    }
-    else if($type_of_service == "")
-    {
-      $error['type_of_service']="Plese Enter type of service";      
-    }
-		else
-		{
-      $imgPath = "";
-			if($_FILES["profile_img"]["error"] > 0)
-      {        
-        echo "<script>alert('" . $_FILES["profile_img"]["error"] . "');</script>";
-      }
-      else
+      if(isset($_POST['SUBMIT']) && $_POST['SUBMIT']=='REGISTER')
       {
-        $imgPath="profile_pictures/" . basename($_FILES["profile_img"]["name"]);
-      
-        $imgFileType = strtolower(pathinfo($imgPath,PATHINFO_EXTENSION));
-        
-        $check = getimagesize($_FILES["profile_img"]["tmp_name"]);
-        if($check !== false)
-         {
-          copy($_FILES["profile_img"]["tmp_name"],$imgPath);            
-          echo "<script>alert('Profile Image uploaded Successfully.! ');</script>";          
-         }
-        else
-         {
-          echo "<script>alert('You cant Upload this File.! ');</script>";          
-         }              
-      } 
+        $profile_name=trim($_POST['profile_name']);
+        $first_name=trim($_POST['first_name']);
+        $last_name=trim($_POST['last_name']);		
+        $email=trim($_POST['email']);
+        $pwd=trim($_POST['pwd']);
+        $cpwd=trim($_POST['cpwd']);
+        $addr=trim($_POST['addr']);		
+        $num=trim($_POST['num']);
+        $blood_group = trim($_POST['blood_group']);
+        $avail_time = trim($_POST['avail_time']);
+        $type_of_service = trim($_POST['type_of_service']);
 
-			$ins="INSERT INTO user_master (first_name, last_name, profile_display_name,profile_img_path,user_pwd,user_address,user_email,phone_number,blood_group,available_time,type_of_service) VALUES('$first_name','$last_name','$profile_name','$imgPath','$pwd','$addr','$email',$num,'$blood_group','$avail_time','$type_of_service')"; 
-				
-			mysqli_query($conn,$ins) or die (mysqli_error($conn));
-			echo "<script>alert('You registered Successfully.! ');window.location='index.php';</script>";			
-		}
-	}
+        $error=array();
+        $errSet = 0;
+
+        if($profile_name=="")
+        {
+          $error['profile_name']="Enter Profile Name";
+          $errSet = 1;
+        }
+        else if($profile_name != "")
+        {
+          $sel="SELECT * FROM user_master WHERE profile_display_name='$profile_name'";
+          $res=mysqli_query($conn, $sel) or die (mysqli_error($conn));
+          $row=mysqli_num_rows($res);
+          if($row)
+          {
+            $error['profile_name']="Profile name already exist!";  
+            $errSet = 1;
+          }      
+        }
+        if($first_name=="")
+        {
+          $error['first_name']="Enter First Name";
+          $errSet = 1;
+        }
+        if($last_name=="")
+        {
+          $error['last_name']="Enter Last Name";
+          $errSet = 1;
+        }
+        if($email=="")
+        {   
+          $error['email']="Please Enter Email";
+          $errSet = 1;   
+        }	
+        else if($email != "")
+        {	
+          if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {         
+            $error['email']="Invalid email format";
+            $errSet = 1;
+          }
+          else
+          {
+            $sel="SELECT * FROM user_master WHERE user_email='$email'";
+            $res=mysqli_query($conn, $sel) or die (mysqli_error($conn));
+            $row=mysqli_num_rows($res);
+            if($row)
+            {
+              $error['email']="Email already exist!";
+              $errSet = 1;  
+            }
+          }      
+        }
+        if($pwd=="")
+        {      
+          $error['pwd']="Plese Enter Password";
+          $errSet = 1;
+        }
+        if($pwd != "" && $cpwd == "")
+        {
+          $error['cpwd']="Plese Enter Confirm-Password";
+          $errSet = 1;
+        }
+        if($pwd != "" && $cpwd != "")
+        {
+          if($pwd != $cpwd)
+          {
+            $error['cpwd']="Confirm-password does not match with password";
+            $errSet = 1;
+          }          
+        }
+        if($addr=="")
+        {          
+          $error['addr']="Enter Address";
+          $errSet = 1;
+        }
+        if($num=="")
+        {
+          $error['num']="Plese Enter Phone number";
+          $errSet = 1;
+        }
+        if($blood_group == "")
+        {
+          $error['blood_group']="Plese Enter blood Group";
+          $errSet = 1;
+        }
+        if($avail_time == "")
+        {
+          $error['avail_time']="Plese Enter Available time";
+          $errSet = 1;      
+        }
+        if($type_of_service == "")
+        {
+          $error['type_of_service']="Plese Enter type of service"; 
+          $errSet = 1;     
+        }
+        if($errSet == 0)
+        {
+          $imgPath = "";
+          if($_FILES["profile_img"]["error"] > 0)
+          {        
+            echo "<script>alert('" . $_FILES["profile_img"]["error"] . "');</script>";
+          }
+          else
+          {
+            if(!file_exists('profile_pictures'))
+            {
+              mkdir('profile_pictures', 0777, true);
+            }
+
+            $imgPath="profile_pictures/" . basename($_FILES["profile_img"]["name"]);
+          
+            $imgFileType = strtolower(pathinfo($imgPath,PATHINFO_EXTENSION));
+            
+            $check = getimagesize($_FILES["profile_img"]["tmp_name"]);
+            if($check !== false)
+            {
+              copy($_FILES["profile_img"]["tmp_name"],$imgPath);            
+              echo "<script>alert('Profile Image uploaded Successfully.! ');</script>";          
+            }
+            else
+            {
+              echo "<script>alert('You cant Upload this File.! ');</script>";          
+            }              
+          } 
+
+          $ins="INSERT INTO user_master (first_name, last_name, profile_display_name,profile_img_path,user_pwd,user_address,user_email,phone_number,blood_group,available_time,type_of_service) VALUES('$first_name','$last_name','$profile_name','$imgPath','$pwd','$addr','$email',$num,'$blood_group','$avail_time','$type_of_service')"; 
+            
+          mysqli_query($conn,$ins) or die (mysqli_error($conn));
+          echo "<script>alert('You registered Successfully.! ');window.location='index.php';</script>";			
+        }
+      }
 	  ?>
   <form action="" method="post" name="registr" style="padding-right:70px;" enctype="multipart/form-data">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped" style="padding:20px !important">
           <tr> 
-            <td>Profile Picture</td>
-            <td><input type="file" name="profile_img" id="profile_img"/></td>         
-            <td></td>
+            <td><label for="profilePicture">Profile Picture</label></td>
+            <td><input type="file" class="form-control-file" name="profile_img" id="profile_img"/></td>                     
           </tr>
           <tr> 
-            <td>Profile Display Name</td>
-            <td><input type="text" name="profile_name" placeholder="Profile Display Name" maxlength="50" autocomplete="off" id="profile_name" value="<?php if(isset($profile_name)) echo $profile_name; ?>"/></td>
-            <td width="50%"><span class="msg"><?php if(isset($error['profile_name'])) echo $error['profile_name']?></span></td>                   
+            <td><label for="profileDisplayName" class="control-label">Profile Display Name</label></td>
+            <td><input type="text" class="form-control <?php if(isset($error['profile_name'])) echo 'errBorder'?>" name="profile_name" placeholder="Profile Display Name" maxlength="50"  id="profile_name" value="<?php if(isset($profile_name)) echo $profile_name; ?>"/> <span class="errMsg"><?php if(isset($error['profile_name'])) echo $error['profile_name']?></span></td>                        
           </tr>
           <tr> 
-            <td>First Name</td>
-            <td><input type="text" name="first_name" placeholder="Firstname" maxlength="50" autocomplete="off" id="first_name" value="<?php if(isset($first_name)) echo $first_name; ?>"/></td>
-            <td width="50%"><span class="msg"><?php if(isset($error['first_name'])) echo $error['first_name']?></span></td>          
+            <td><label for="firstName" class="control-label">First Name</label></td>
+            <td><input type="text" class="form-control <?php if(isset($error['first_name'])) echo 'errBorder'?>" name="first_name" placeholder="Firstname" maxlength="50"  id="first_name" value="<?php if(isset($first_name)) echo $first_name; ?>"/> <span class="errMsg"><?php if(isset($error['first_name'])) echo $error['first_name']?></span> </td>            
           </tr>
           <tr> 
-            <td>Last Name</td>
-            <td><input type="text" name="last_name" placeholder="Lastname" maxlength="50" autocomplete="off" id="last_name" value="<?php if(isset($last_name)) echo $last_name; ?>"/></td>
-            <td width="50%"><span class="msg"><?php if(isset($error['last_name'])) echo $error['last_name']?></span></td>                   
+            <td><label for="lastName">Last Name</label></td>
+            <td><input type="text" class="form-control <?php if(isset($error['last_name'])) echo 'errBorder'?>" name="last_name" placeholder="Lastname" maxlength="50"  id="last_name" value="<?php if(isset($last_name)) echo $last_name; ?>"/> <span class="errMsg"><?php if(isset($error['last_name'])) echo $error['last_name']?></span> </td>            
           </tr>
           <tr> 
-            <td>Email</td>
-            <td><input type="text" name="email" id="email" placeholder="E-mail" maxlength="30" autocomplete="off" value="<?php if(isset($email)) echo $email; ?>" /></td>
-          	<td width="50%"><span class="msg"><?php if(isset($error['email'])) echo $error['email']?></span></td>
+            <td><label for="email">Email</label></td>
+            <td><input type="text" class="form-control <?php if(isset($error['email'])) echo 'errBorder'?>" name="email" id="email" placeholder="E-mail" maxlength="30"  value="<?php if(isset($email)) echo $email; ?>" /><span class="errMsg"><?php if(isset($error['email'])) echo $error['email']?></span></td>          	
           </tr>
           <tr> 
-            <td>Password</td>
-            <td><input type="password" name="pwd" id="pwd" placeholder="Enter password" maxlength="20" autocomplete="off" value="<?php if(isset($pwd)) echo $pwd; ?>"/></td>
-            <td width="50%"><span class="msg"><?php if(isset($error['pwd'])) echo $error['pwd']; ?></span></td>        
+            <td><label for="password">Password</label></td>
+            <td><input type="password" class="form-control <?php if(isset($error['pwd'])) echo 'errBorder'?>" name="pwd" id="pwd" placeholder="Enter password" maxlength="20"  value="<?php if(isset($pwd)) echo $pwd; ?>"/> <span class="errMsg"><?php if(isset($error['pwd'])) echo $error['pwd']; ?></span> </td>            
           </tr>
           <tr> 
-            <td>Confirm Password</td>
-            <td><input type="password" name="cpwd" id="cpwd" placeholder="Confirm-Password" autocomplete="off"  /></td>
-			      <td width="50%"><span class="msg"><?php if(isset($error['cpwd'])) echo $error['cpwd']?></span></td>        
+            <td><label for="confirmPassword">Confirm Password</label></td>
+            <td><input type="password" class="form-control <?php if(isset($error['cpwd'])) echo 'errBorder'?>" name="cpwd" id="cpwd" placeholder="Confirm-Password"  value="<?php if(isset($cpwd)) echo $cpwd; ?>" /><span class="errMsg"><?php if(isset($error['cpwd'])) echo $error['cpwd']?></span></td>			      
           </tr>
           <tr> 
-            <td>Address</td>
-            <td><textarea name="addr" id="addr" placeholder="Enter address" maxlength="50"><?php if(isset($addr)) echo $addr; ?></textarea></td>
-            <td width="50%"><span class="msg"><?php if(isset($error['addr'])) echo $error['addr']?></span></td>         
+            <td><label for="address">Address</label></td>
+            <td><textarea name="addr" class="form-control <?php if(isset($error['addr'])) echo 'errBorder'?>" id="addr" placeholder="Enter address" maxlength="50"><?php if(isset($addr)) echo $addr; ?></textarea> <span class="errMsg"><?php if(isset($error['addr'])) echo $error['addr']?></span></td>            
           </tr>
           <tr> 
-            <td>Phone Number</td>
-            <td><input type="text" maxlength="12" name="num" id="num" autocomplete="off" placeholder="Mobile No" value="<?php if(isset($num)) echo $num; ?>"/></td>
-            <td width="50%"><span class="msg"><?php if(isset($error['num'])) echo $error['num']?></span></td>        
+            <td><label for="phoneNumber">Phone Number</label></td>
+            <td><input type="text" class="form-control <?php if(isset($error['num'])) echo 'errBorder'?>" maxlength="12" name="num" id="num"  placeholder="Mobile No" value="<?php if(isset($num)) echo $num; ?>"/><span class="errMsg"><?php if(isset($error['num'])) echo $error['num']?></span></td>               
           </tr>
           <tr> 
-            <td>Blood Group</td>
-            <td><input type="text" name="blood_group" placeholder="Blood Group" maxlength="50" autocomplete="off" id="blood_group" value="<?php if(isset($blood_group)) echo $blood_group; ?>"/></td>
-            <td width="50%"><span class="msg"><?php if(isset($error['blood_group'])) echo $error['blood_group']?></span></td>                            
+            <td><label for="bloodGroup">Blood Group</label></td>
+            <td><input type="text" class="form-control <?php if(isset($error['blood_group'])) echo 'errBorder'?>" name="blood_group" placeholder="Blood Group" maxlength="3"  id="blood_group" value="<?php if(isset($blood_group)) echo $blood_group; ?>"/><span class="errMsg"><?php if(isset($error['blood_group'])) echo $error['blood_group']?></span></td>            
           </tr>
           <tr> 
-            <td>Available Time</td>
-            <td><input type="text" name="avail_time" placeholder="Available Time" maxlength="50" autocomplete="off" id="avail_time" value="<?php if(isset($avail_time)) echo $avail_time; ?>"/></td>
-            <td width="50%"><span class="msg"><?php if(isset($error['avail_time'])) echo $error['avail_time']?></span></td>                            
+            <td><label for="availableTime">Available Time</label></td>
+            <td><input type="text" class="form-control <?php if(isset($error['avail_time'])) echo 'errBorder'?>" name="avail_time" placeholder="Available Time" maxlength="50"  id="avail_time" value="<?php if(isset($avail_time)) echo $avail_time; ?>"/><span class="errMsg"><?php if(isset($error['avail_time'])) echo $error['avail_time']?></span></td>            
           </tr>  
           <tr> 
-            <td>Type of Service</td>
-            <td><input type="text" name="type_of_service" placeholder="Type Of service" maxlength="50" autocomplete="off" id="type_of_service" value="<?php if(isset($type_of_service)) echo $type_of_service; ?>"/></td>
-            <td width="50%"><span class="msg"><?php if(isset($error['type_of_service'])) echo $error['type_of_service']?></span></td>                            
+            <td><label for="typeOfService">Type of Service</label></td>
+            <td><input type="text" class="form-control <?php if(isset($error['type_of_service'])) echo 'errBorder'?>" name="type_of_service" placeholder="Type Of service" maxlength="50"  id="type_of_service" value="<?php if(isset($type_of_service)) echo $type_of_service; ?>"/><span class="errMsg"><?php if(isset($error['type_of_service'])) echo $error['type_of_service']?></span></td>            
           </tr>
           <tr>
-            <td colspan="2" align="center"><input type="submit" name="SUBMIT" value="REGISTER" /> <input type="button" name="Login" value="Login"></td><td> <a href="showRecords.php"><input type="button" name="ShowRecords" value="View Users"></a></td>
+            <td colspan="2" align="center"><input type="submit" name="SUBMIT" class="btn btn-success" value="REGISTER" /> <input type="button" class="btn btn-primary" name="Login" value="Login"> <a href="showRecords.php"><input type="button" class="btn btn-primary" name="ShowRecords" value="View Users"></a> </td>
           </tr>          
         </table>
       </form>   
@@ -193,6 +242,32 @@
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery-3.3.1.js"></script>
+
+    <script>
+
+      function validateEmail(emailField) {
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if (reg.test(emailField.value) == false) 
+          {
+            alert('Invalid Email Address');
+            return false;
+          }
+        return true;
+      }
+
+      function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+          e.preventDefault();
+        }
+      }
+
+      $(function(){
+        $('#num').keydown(function(e){
+            return AllowNumbersOnly(e);
+        });
+      });
+    </script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
   </body>
