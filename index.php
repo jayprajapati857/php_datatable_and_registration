@@ -161,7 +161,7 @@
             }
 
             $imgPath="profile_pictures/" . basename($_FILES["profile_img"]["name"]);
-          
+            $imgName = basename($_FILES["profile_img"]["name"]);
             $imgFileType = strtolower(pathinfo($imgPath,PATHINFO_EXTENSION));
             
             $check = getimagesize($_FILES["profile_img"]["tmp_name"]);
@@ -176,7 +176,7 @@
             }              
           } 
 
-          $ins="INSERT INTO user_master (first_name, last_name, profile_display_name,profile_img_path,user_pwd,user_address,user_email,phone_number,blood_group,available_time,type_of_service) VALUES('$first_name','$last_name','$profile_name','$imgPath','$pwd','$addr','$email',$num,'$blood_group','$avail_time','$type_of_service')"; 
+          $ins="INSERT INTO user_master (first_name, last_name, profile_display_name,profile_img_path,user_pwd,user_address,user_email,phone_number,blood_group,available_time,type_of_service) VALUES('$first_name','$last_name','$profile_name','$imgName','$pwd','$addr','$email',$num,'$blood_group','$avail_time','$type_of_service')"; 
             
           mysqli_query($conn,$ins) or die (mysqli_error($conn));
           echo "<script>alert('You registered Successfully.! ');window.location='index.php';</script>";			
@@ -223,7 +223,33 @@
           </tr>
           <tr> 
             <td><label for="bloodGroup">Blood Group</label></td>
-            <td><input type="text" class="form-control <?php if(isset($error['blood_group'])) echo 'errBorder'?>" name="blood_group" placeholder="Blood Group" maxlength="3"  id="blood_group" value="<?php if(isset($blood_group)) echo $blood_group; ?>"/><span class="errMsg"><?php if(isset($error['blood_group'])) echo $error['blood_group']?></span></td>            
+            <td><input type="text" class="form-control <?php if(isset($error['blood_group'])) echo 'errBorder'?>" name="blood_group" placeholder="Blood Group" maxlength="3"  id="blood_group" value="<?php if(isset($blood_group)) echo $blood_group; ?>"/><span class="errMsg"><?php if(isset($error['blood_group'])) echo $error['blood_group']?></span></td>
+            <td>
+              <!-- <select class="dropdown">
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+              </select> -->
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Blood Group
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#">A+</a></li>
+                  <li><a href="#">A-</a></li>
+                  <li><a href="#">B+</a></li>
+                  <li><a href="#">B-</a></li>
+                  <li><a href="#">O+</a></li>
+                  <li><a href="#">O-</a></li>
+                  <li><a href="#">AB+</a></li>
+                  <li><a href="#">AB-</a></li>
+                </ul>
+              </div>
+            </td>            
           </tr>
           <tr> 
             <td><label for="availableTime">Available Time</label></td>

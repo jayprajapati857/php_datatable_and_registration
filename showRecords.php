@@ -39,17 +39,17 @@
 				{ "title": "User Name", "data":"profile_display_name" },
 				{ "title": "First Name", "data":"first_name" },
 				{ "title": "Last Name", "data":"last_name" },
-				{ "title": "Address", "data":"user_address" },
-				{ "title": "Email", "data":"user_email" },
-				{ "title": "Phone Number", "data":"phone_number" },
+				{ "title": "Address", "data":"user_address", "orderable":false},
+				{ "title": "Email", "data":"user_email", "orderable":false },
+				{ "title": "Phone Number", "data":"phone_number", "orderable":false },
 				{ "title": "Blood Group", "data":"blood_group" },
-				{ "title": "Available Time", "data":"available_time" },
-				{ "title": "Type Of Service", "data":"type_of_service" }
+				{ "title": "Available Time", "data":"available_time", "orderable":false },
+				{ "title": "Type Of Service", "data":"type_of_service", "orderable":false }
 			],
 			"columnDefs": [
 				{ "targets": 0,
 				"render": function(data) {
-					return '<a href=""><img src="'+data+'" height="80px" width="80px"></a>'
+					return '<a href=""><img src="profile_pictures/'+data+'" height="80px" width="80px"></a>'
 				}
 				}   
 			]				
