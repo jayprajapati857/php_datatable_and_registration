@@ -10,6 +10,7 @@ th{
 }
 td{
     vertical-align: middle !important;
+    text-align: center;
 }
 
 .btn-bs-file{
@@ -24,4 +25,13 @@ td{
     height:0;
     outline: none;
     cursor: inherit;
+}
+
+.upload_profile_pic{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-image: url("./../content/images/default-profile-pic.png") ;
+    background-size: 100px;
 }
