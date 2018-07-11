@@ -13,6 +13,8 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/jatin_foundation.css" rel="stylesheet">
+
     <style>
       .errMsg
       {
@@ -187,7 +189,7 @@
         <table class="table table-bordered table-striped" style="padding:20px !important">
           <tr> 
             <td><label for="profilePicture">Profile Picture</label></td>
-            <td><input type="file" class="form-control-file" name="profile_img" id="profile_img"/></td>                     
+            <td><label class="form-control-file btn-bs-file btn btn-sm btn-primary"> Select Image <input type="file" name="profile_img" id="profile_img"/> </label></td>                     
           </tr>
           <tr> 
             <td><label for="profileDisplayName" class="control-label">Profile Display Name</label></td>
