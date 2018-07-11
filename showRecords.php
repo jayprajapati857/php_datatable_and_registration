@@ -42,7 +42,6 @@
 				{ "title": "User Name", "data":"profile_display_name" },
 				{ "title": "First Name", "data":"first_name" },
 				{ "title": "Last Name", "data":"last_name" },
-<<<<<<< HEAD
 				{ "title": "Address", "data":"user_address", "orderable":false },
 				{ "title": "Email", "data":"user_email" , "orderable":false},
 				{ "title": "Phone Number", "data":"phone_number", "orderable":false , "render": function ( data, type, full, meta ) {
@@ -50,26 +49,15 @@
     } },
 				{ "title": "Blood Group", "data":"blood_group" },
 				{ "title": "Available Time", "data":"available_time"},
-=======
-				{ "title": "Address", "data":"user_address", "orderable":false},
-				{ "title": "Email", "data":"user_email", "orderable":false },
-				{ "title": "Phone Number", "data":"phone_number", "orderable":false },
-				{ "title": "Blood Group", "data":"blood_group" },
-				{ "title": "Available Time", "data":"available_time", "orderable":false },
->>>>>>> ui2
 				{ "title": "Type Of Service", "data":"type_of_service", "orderable":false }
 			],
 			"columnDefs": [
 				{ "targets": 0,
 				"render": function(data) {
-<<<<<<< HEAD
 					if(data == ""){
 						data = "./content/images/default-profile-pic.png";
 					}
 					return '<a href=""><img class="img-circle img-user center" src="'+data+'" onerror="this.src = \'./content/images/default-profile-pic.png\'"></a>'
-=======
-					return '<a href=""><img src="profile_pictures/'+data+'" height="80px" width="80px"></a>'
->>>>>>> ui2
 				}
 				}   
 			]				
