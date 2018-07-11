@@ -34,7 +34,7 @@
     <![endif]-->
   </head>
   <body>
-    <div>
+    <div class="row" style="margin:0 !important">
     <div class="col-xs-12">
     <?php 
       if(isset($_POST['SUBMIT']) && $_POST['SUBMIT']=='REGISTER')
@@ -54,7 +54,7 @@
         $error=array();
         $errSet = 0;
 
-        if($profile_name=="")
+        if( $profile_name=="" )
         {
           $error['profile_name']="Enter Profile Name";
           $errSet = 1;
@@ -174,7 +174,7 @@
             {
               echo "<script>alert('You cant Upload this File.! ');</script>";          
             }              
-          } 
+          }          
 
           $ins="INSERT INTO user_master (first_name, last_name, profile_display_name,profile_img_path,user_pwd,user_address,user_email,phone_number,blood_group,available_time,type_of_service) VALUES('$first_name','$last_name','$profile_name','$imgName','$pwd','$addr','$email',$num,'$blood_group','$avail_time','$type_of_service')"; 
             
@@ -223,33 +223,25 @@
           </tr>
           <tr> 
             <td><label for="bloodGroup">Blood Group</label></td>
-            <td><input type="text" class="form-control <?php if(isset($error['blood_group'])) echo 'errBorder'?>" name="blood_group" placeholder="Blood Group" maxlength="3"  id="blood_group" value="<?php if(isset($blood_group)) echo $blood_group; ?>"/><span class="errMsg"><?php if(isset($error['blood_group'])) echo $error['blood_group']?></span></td>
             <td>
-              <!-- <select class="dropdown">
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="B-">B-</option>
-                <option value="O+">O+</option>
-                <option value="O-">O-</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-              </select> -->
-              <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Blood Group
-                <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li><a href="#">A+</a></li>
-                  <li><a href="#">A-</a></li>
-                  <li><a href="#">B+</a></li>
-                  <li><a href="#">B-</a></li>
-                  <li><a href="#">O+</a></li>
-                  <li><a href="#">O-</a></li>
-                  <li><a href="#">AB+</a></li>
-                  <li><a href="#">AB-</a></li>
-                </ul>
-              </div>
-            </td>            
+              <div class="input-group">                
+                <div class="dropdown input-group-addon">
+                    <button class="btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Blood Group
+                    <span class="caret"></span></button>
+                    <ul id="ulBloodGroup" class="dropdown-menu">
+                      <li><a href="#">A+</a></li>
+                      <li><a href="#">A-</a></li>
+                      <li><a href="#">B+</a></li>
+                      <li><a href="#">B-</a></li>
+                      <li><a href="#">O+</a></li>
+                      <li><a href="#">O-</a></li>
+                      <li><a href="#">AB+</a></li>
+                      <li><a href="#">AB-</a></li>
+                    </ul>
+                  </div>
+                  <input type="text" class="form-control <?php if(isset($error['blood_group'])) echo 'errBorder'?>" disabled name="blood_group" placeholder="Blood Group" maxlength="3"  id="blood_group" value="<?php if(isset($blood_group)) echo $blood_group; ?>"/><span class="errMsg"><?php if(isset($error['blood_group'])) echo $error['blood_group']?></span>
+                </div>
+            </td>                      
           </tr>
           <tr> 
             <td><label for="availableTime">Available Time</label></td>
@@ -270,6 +262,10 @@
     <script src="js/jquery-3.3.1.js"></script>
 
     <script>
+
+      $('#ulBloodGroup li').on('click', function(){
+          $('#blood_group').val($(this).text());
+      });
 
       function validateEmail(emailField) {
         var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;

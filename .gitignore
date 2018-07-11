@@ -1,3 +1,6 @@
 
 # excluding profile profile_pictures
 profile_pictures/
+
+#vscode settings
+.vscode
