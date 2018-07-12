@@ -1,6 +1,6 @@
 .img-user {
     display: inline-block;
-    height: auto;
+    height: 80px;
     width: 80px;
   }
 
@@ -35,3 +35,19 @@ td{
     background-image: url("./../content/images/default-profile-pic.png") ;
     background-size: 100px;
 }
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.Blink {
+    animation: blinker 1.5s cubic-bezier(.5, 0, 1, 1) alternate;  
+  }
+  @keyframes blinker {  
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }

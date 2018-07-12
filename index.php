@@ -36,7 +36,7 @@
     <![endif]-->
   </head>
   <body>
-    <div class="row" style="margin:0 !important">
+    <div class="row card" style="margin:15px !important ">
     <div class="col-xs-12"  style="padding-top:15px; padding-bottom:15px;">
     <?php 
       if(isset($_POST['SUBMIT']) && $_POST['SUBMIT']=='REGISTER')
@@ -49,7 +49,8 @@
         $cpwd=trim($_POST['cpwd']);
         $addr=trim($_POST['addr']);		
         $num=trim($_POST['num']);
-        $blood_group = trim($_POST['blood_group']);
+        $blood_group = trim($_POST['blood_group']);        
+        
         $avail_time = trim($_POST['avail_time']);
         $type_of_service = trim($_POST['type_of_service']);
 
@@ -153,7 +154,7 @@
           $imgPath = "";
           if($_FILES["profile_img"]["error"] > 0)
           {        
-            echo "<script>alert('" . $_FILES["profile_img"]["error"] . "');</script>";
+            //echo "<script>alert('" . $_FILES["profile_img"]["error"] . "');</script>";
           }
           else
           {
@@ -226,22 +227,22 @@
           <tr> 
             <td style="text-align: left;"><label for="bloodGroup">Blood Group</label></td>
             <td>
-              <div class="input-group">                
-                <div class="dropdown input-group-addon">
-                    <button class="btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Blood Group
+              <div class="">                
+                <div class="dropdown">
+                    <button id= "blood_group_drop_down_button" style="width:  100px; float: left;" class="btn-primary btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown"><span id="selected_blood_group">Blood Group</span>
                     <span class="caret"></span></button>
                     <ul id="ulBloodGroup" class="dropdown-menu">
-                      <li><a href="#">A+</a></li>
-                      <li><a href="#">A-</a></li>
-                      <li><a href="#">B+</a></li>
-                      <li><a href="#">B-</a></li>
-                      <li><a href="#">O+</a></li>
-                      <li><a href="#">O-</a></li>
-                      <li><a href="#">AB+</a></li>
-                      <li><a href="#">AB-</a></li>
+                      <li><a href="#" onclick="event.preventDefault();">A+</a></li>
+                      <li><a href="#" onclick="event.preventDefault();">A-</a></li>
+                      <li><a href="#" onclick="event.preventDefault();">B+</a></li>
+                      <li><a href="#" onclick="event.preventDefault();">B-</a></li>
+                      <li><a href="#" onclick="event.preventDefault();">O+</a></li>
+                      <li><a href="#" onclick="event.preventDefault();">O-</a></li>
+                      <li><a href="#" onclick="event.preventDefault();">AB+</a></li>
+                      <li><a href="#" onclick="event.preventDefault();">AB-</a></li>
                     </ul>
                   </div>
-                  <input type="text" class="form-control <?php if(isset($error['blood_group'])) echo 'errBorder'?>" disabled name="blood_group" placeholder="Blood Group" maxlength="3"  id="blood_group" value="<?php if(isset($blood_group)) echo $blood_group; ?>"/><span class="errMsg"><?php if(isset($error['blood_group'])) echo $error['blood_group']?></span>
+                  <input type="hidden" class="form-control <?php if(isset($error['blood_group'])) echo 'errBorder'?>" name="blood_group" placeholder="Blood Group" maxlength="3"  id="blood_group" value="<?php if(isset($blood_group)) echo $blood_group; ?>"/><span class="errMsg"><?php if(isset($error['blood_group'])) echo $error['blood_group']?></span>
                 </div>
             </td>                      
           </tr>
@@ -275,6 +276,8 @@
 
       $('#ulBloodGroup li').on('click', function(){
           $('#blood_group').val($(this).text());
+          $('#selected_blood_group').remove();
+          $('#blood_group_drop_down_button').prepend('<span id="selected_blood_group">'+$(this).text()+'</span>');
       });
 
       function validateEmail(emailField) {
