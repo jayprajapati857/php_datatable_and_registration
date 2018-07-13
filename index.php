@@ -54,10 +54,13 @@
         $avail_time = trim($_POST['avail_time']);
         $type_of_service = trim($_POST['type_of_service']);
 
+        $imgPath = "";
+        $imgName ="";
+
         $error=array();
         $errSet = 0;
 
-        if( $profile_name=="" )
+        if($profile_name=="")
         {
           $error['profile_name']="Enter Profile Name";
           $errSet = 1;
@@ -136,7 +139,7 @@
         }
         if($blood_group == "")
         {
-          $error['blood_group']="Plese Enter blood Group";
+          $error['blood_group']="Plese select blood Group";
           $errSet = 1;
         }
         if($avail_time == "")
@@ -149,15 +152,16 @@
           $error['type_of_service']="Plese Enter type of service"; 
           $errSet = 1;     
         }
-        if($errSet == 0)
+        if($_FILES['profile_img']['size'] != 0 && $_FILES['profile_img']['error'] > 0)
         {
-          $imgPath = "";
-          if($_FILES["profile_img"]["error"] > 0)
+          $error['profile_img']="Something went wrong! Please select another Image."; 
+          $errSet = 1;
+        }        
+        if($errSet == 0)
+        {          
+          if($_FILES['profile_img']['size'] != 0)
           {        
             //echo "<script>alert('" . $_FILES["profile_img"]["error"] . "');</script>";
-          }
-          else
-          {
             if(!file_exists('profile_pictures'))
             {
               mkdir('profile_pictures', 0777, true);
@@ -171,18 +175,27 @@
             if($check !== false)
             {
               copy($_FILES["profile_img"]["tmp_name"],$imgPath);            
-              echo "<script>alert('Profile Image uploaded Successfully.! ');</script>";          
+              echo "<script>alert('Profile Image uploaded Successfully.! ');</script>"; 
+              
+              $ins="INSERT INTO user_master (first_name, last_name, profile_display_name,profile_img_path,user_pwd,user_address,user_email,phone_number,blood_group,available_time,type_of_service) VALUES('$first_name','$last_name','$profile_name','$imgName','$pwd','$addr','$email',$num,'$blood_group','$avail_time','$type_of_service')"; 
+            
+              mysqli_query($conn,$ins) or die (mysqli_error($conn));
+              echo "<script>alert('You registered Successfully.! ');window.location='index.php';</script>";	
             }
             else
             {
+              $error['profile_img']="Something went wrong! Please select another Image.";
               echo "<script>alert('You cant Upload this File.! ');</script>";          
-            }              
-          }          
-
-          $ins="INSERT INTO user_master (first_name, last_name, profile_display_name,profile_img_path,user_pwd,user_address,user_email,phone_number,blood_group,available_time,type_of_service) VALUES('$first_name','$last_name','$profile_name','$imgName','$pwd','$addr','$email',$num,'$blood_group','$avail_time','$type_of_service')"; 
+            }   
+          }
+          else {
+            $ins="INSERT INTO user_master (first_name, last_name, profile_display_name,profile_img_path,user_pwd,user_address,user_email,phone_number,blood_group,available_time,type_of_service) VALUES('$first_name','$last_name','$profile_name','$imgName','$pwd','$addr','$email',$num,'$blood_group','$avail_time','$type_of_service')"; 
             
-          mysqli_query($conn,$ins) or die (mysqli_error($conn));
-          echo "<script>alert('You registered Successfully.! ');window.location='index.php';</script>";			
+            mysqli_query($conn,$ins) or die (mysqli_error($conn));
+            echo "<script>alert('You registered Successfully.! ');window.location='index.php';</script>";	
+          }                 
+
+          		
         }
       }
 	  ?>
@@ -190,7 +203,7 @@
         <table class="table table-bordered table-striped" style="padding:20px !important">
           <tr> 
             <td style="text-align: left;"><label for="profilePicture">Profile Picture</label></td>
-            <td><label class="form-control-file btn-bs-file btn btn-sm btn-primary upload_profile_pic"><input type="file" name="profile_img" id="profile_img"/> </label></td>                     
+            <td><label class="form-control-file btn-bs-file btn btn-sm btn-primary upload_profile_pic"><input type="file" name="profile_img" id="profile_img"/></label><span class="errMsg"><?php if(isset($error['profile_img'])) echo $error['profile_img']?></span></td>                     
           </tr>
           <tr> 
             <td style="text-align: left;"><label for="profileDisplayName" class="control-label">Profile Display Name</label></td>

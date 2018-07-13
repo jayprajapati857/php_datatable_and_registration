@@ -1,7 +1,7 @@
 <?php 
 //error_reporting(E_WARNING | E_NOTICE | E_DEPRECATED);
 // error_reporting(0);
-error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT);
+error_reporting(E_ALL & ~E_NOTICE & E_STRICT);
 include 'conn.php';
 
 $draw = intval( $_REQUEST['draw'] ); //Draw counter. This is used by DataTables to ensure that the Ajax returns from server-side processing requests are drawn in sequence by DataTables(Ajax requests are asynchronous and thus can return out of sequence).
@@ -61,7 +61,8 @@ if($totalRowsFetched > 0)
 }
 else
 {
-	$response->data = array();
+	$response = new stdClass();		
+	$response->data = [];
 }
  $response->draw = intval( $_REQUEST['draw'] );
  $response->recordsTotal = $count;

@@ -68,7 +68,7 @@
 						"data": "user_email",
 						"orderable": false,
 						"render":function(data,type,full,meta){
-							return '<label id="'+ full.user_email +'" style="font-weight:  200;">'+data +'</label> <i class="fa fa-copy" id="copy_button_icon" style="margin:15px;color:#337ab7" onclick="copyToClipboard(' + "\'" + full.user_email + "\'" + ')"></i>';
+							return '<label id="'+ full.user_email +'" style="font-weight:  200;">'+data +'</label> <i class="fa fa-copy" id="copy_button_icon" title="Copy" style="margin:15px;color:#337ab7" onclick="copyToClipboard(' + "\'" + full.user_email + "\'" + ')"></i>';
 						}
 					}, 
 					{
@@ -222,7 +222,7 @@ var span = document.getElementsByClassName("close")[0];
 // }
 
 function img_modal(path){
-	var image_modal = '<center><img style="width:50%; height:fit-content;" class="img-circle img-user center card" src="' + path + '" onerror="this.src = \'./content/images/default-profile-pic.png\'"></center>';
+	var image_modal = '<center><img style="width:50%; height:50%;" class="img-circle img-user center card" src="' + path + '" onerror="this.src = \'./content/images/default-profile-pic.png\'"></center>';
 	// modal_to_append.appendChild(image_modal);
 	document.getElementById("modal_append_here").innerHTML = image_modal;
 	modal.style.display = "block";
