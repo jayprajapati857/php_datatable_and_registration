@@ -1,0 +1,53 @@
+.img-user {
+    display: inline-block;
+    height: 80px;
+    width: 80px;
+  }
+
+th{
+    vertical-align: middle !important;
+    text-align: center;
+}
+td{
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+.btn-bs-file{
+    position:relative;
+}
+.btn-bs-file input[type="file"]{
+    position: absolute;
+    top: -9999999;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    width:0;
+    height:0;
+    outline: none;
+    cursor: inherit;
+}
+
+.upload_profile_pic{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-image: url("./../content/images/default-profile-pic.png") ;
+    background-size: 100px;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.Blink {
+    animation: blinker 1.5s cubic-bezier(.5, 0, 1, 1) alternate;  
+  }
+  @keyframes blinker {  
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }

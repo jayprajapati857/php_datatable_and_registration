@@ -1,7 +1,5 @@
-# jpg png jpeg FILES
-*.png
-*.jpg
-*.jpeg
-
 # excluding profile profile_pictures
 profile_pictures/
+
+#vscode settings
+.vscode
