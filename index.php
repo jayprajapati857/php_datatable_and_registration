@@ -72,7 +72,7 @@
           $row=mysqli_num_rows($res);
           if($row)
           {
-            $error['profile_name']="Profile name already exist!";  
+            $error['profile_name']="User name already exist!";  
             $errSet = 1;
           }      
         }
@@ -206,39 +206,39 @@
             <td><label class="form-control-file btn-bs-file btn btn-sm btn-primary upload_profile_pic"><input type="file" name="profile_img" id="profile_img"/></label><span class="errMsg"><?php if(isset($error['profile_img'])) echo $error['profile_img']?></span></td>                     
           </tr>
           <tr> 
-            <td style="text-align: left;"><label for="profileDisplayName" class="control-label">Profile Display Name</label></td>
-            <td><input type="text" class="form-control <?php if(isset($error['profile_name'])) echo 'errBorder'?>" name="profile_name" placeholder="Profile Display Name" maxlength="50"  id="profile_name" value="<?php if(isset($profile_name)) echo $profile_name; ?>"/> <span class="errMsg"><?php if(isset($error['profile_name'])) echo $error['profile_name']?></span></td>                        
+            <td style="text-align: left;"><label for="profileDisplayName" class="control-label">User Name<span class="errMsg">*</span></label></td>
+            <td><input type="text" class="form-control <?php if(isset($error['profile_name'])) echo 'errBorder'?>" name="profile_name" placeholder="User Name" maxlength="50"  id="profile_name" value="<?php if(isset($profile_name)) echo $profile_name; ?>"/> <span class="errMsg"><?php if(isset($error['profile_name'])) echo $error['profile_name']?></span></td>                        
           </tr>
           <tr> 
-            <td style="text-align: left;"><label for="firstName" class="control-label">First Name</label></td>
+            <td style="text-align: left;"><label for="firstName" class="control-label">First Name<span class="errMsg">*</span></label></td>
             <td><input type="text" class="form-control <?php if(isset($error['first_name'])) echo 'errBorder'?>" name="first_name" placeholder="Firstname" maxlength="50"  id="first_name" value="<?php if(isset($first_name)) echo $first_name; ?>"/> <span class="errMsg"><?php if(isset($error['first_name'])) echo $error['first_name']?></span> </td>            
           </tr>
           <tr> 
-            <td style="text-align: left;"><label for="lastName">Last Name</label></td>
+            <td style="text-align: left;"><label for="lastName">Last Name<span class="errMsg">*</span></label></td>
             <td><input type="text" class="form-control <?php if(isset($error['last_name'])) echo 'errBorder'?>" name="last_name" placeholder="Lastname" maxlength="50"  id="last_name" value="<?php if(isset($last_name)) echo $last_name; ?>"/> <span class="errMsg"><?php if(isset($error['last_name'])) echo $error['last_name']?></span> </td>            
           </tr>
           <tr> 
-            <td style="text-align: left;"><label for="email">Email</label></td>
+            <td style="text-align: left;"><label for="email">Email<span class="errMsg">*</span></label></td>
             <td><input type="text" class="form-control <?php if(isset($error['email'])) echo 'errBorder'?>" name="email" id="email" placeholder="E-mail" maxlength="30"  value="<?php if(isset($email)) echo $email; ?>" /><span class="errMsg"><?php if(isset($error['email'])) echo $error['email']?></span></td>          	
           </tr>
           <tr> 
-            <td style="text-align: left;"><label for="password">Password</label></td>
+            <td style="text-align: left;"><label for="password">Password<span class="errMsg">*</span></label></td>
             <td><input type="password" class="form-control <?php if(isset($error['pwd'])) echo 'errBorder'?>" name="pwd" id="pwd" placeholder="Enter password" maxlength="20"  value="<?php if(isset($pwd)) echo $pwd; ?>"/> <span class="errMsg"><?php if(isset($error['pwd'])) echo $error['pwd']; ?></span> </td>            
           </tr>
           <tr> 
-            <td style="text-align: left;"><label for="confirmPassword">Confirm Password</label></td>
+            <td style="text-align: left;"><label for="confirmPassword">Confirm Password<span class="errMsg">*</span></label></td>
             <td><input type="password" class="form-control <?php if(isset($error['cpwd'])) echo 'errBorder'?>" name="cpwd" id="cpwd" placeholder="Confirm-Password"  value="<?php if(isset($cpwd)) echo $cpwd; ?>" /><span class="errMsg"><?php if(isset($error['cpwd'])) echo $error['cpwd']?></span></td>			      
           </tr>
           <tr> 
-            <td style="text-align: left;"><label for="address">Address</label></td>
+            <td style="text-align: left;"><label for="address">Address<span class="errMsg">*</span></label></td>
             <td><textarea name="addr" class="form-control <?php if(isset($error['addr'])) echo 'errBorder'?>" id="addr" placeholder="Enter address" maxlength="50"><?php if(isset($addr)) echo $addr; ?></textarea> <span class="errMsg"><?php if(isset($error['addr'])) echo $error['addr']?></span></td>            
           </tr>
           <tr> 
-            <td style="text-align: left;"><label for="phoneNumber">Phone Number</label></td>
+            <td style="text-align: left;"><label for="phoneNumber">Phone Number<span class="errMsg">*</span></label></td>
             <td><input type="text" class="form-control <?php if(isset($error['num'])) echo 'errBorder'?>" maxlength="12" name="num" id="num"  placeholder="Mobile No" value="<?php if(isset($num)) echo $num; ?>"/><span class="errMsg"><?php if(isset($error['num'])) echo $error['num']?></span></td>               
           </tr>
           <tr> 
-            <td style="text-align: left;"><label for="bloodGroup">Blood Group</label></td>
+            <td style="text-align: left;"><label for="bloodGroup">Blood Group<span class="errMsg">*</span></label></td>
             <td>
               <div class="">                
                 <div class="dropdown">
@@ -260,11 +260,11 @@
             </td>                      
           </tr>
           <tr> 
-            <td style="text-align: left;"><label for="availableTime">Available Time</label></td>
+            <td style="text-align: left;"><label for="availableTime">Available Time<span class="errMsg">*</span></label></td>
             <td><input type="text" class="form-control <?php if(isset($error['avail_time'])) echo 'errBorder'?>" name="avail_time" placeholder="Available Time" maxlength="50"  id="avail_time" value="<?php if(isset($avail_time)) echo $avail_time; ?>"/><span class="errMsg"><?php if(isset($error['avail_time'])) echo $error['avail_time']?></span></td>            
           </tr>  
           <tr> 
-            <td style="text-align: left;"><label for="typeOfService">Type of Service</label></td>
+            <td style="text-align: left;"><label for="typeOfService">Type of Service<span class="errMsg">*</span></label></td>
             <td><input type="text" class="form-control <?php if(isset($error['type_of_service'])) echo 'errBorder'?>" name="type_of_service" placeholder="Type Of service" maxlength="50"  id="type_of_service" value="<?php if(isset($type_of_service)) echo $type_of_service; ?>"/><span class="errMsg"><?php if(isset($error['type_of_service'])) echo $error['type_of_service']?></span></td>            
           </tr>
           <tr>
