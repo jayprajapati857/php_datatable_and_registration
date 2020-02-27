@@ -3,7 +3,7 @@
  //$con=mysql_connect('localhost','root','FaNG4cY') or die (mysql_error()); 
  //$db=mysql_select_db('jatinsfoundation') or die(mysql_error());
 
- $conn = mysqli_connect("localhost","root","password","jatinsfoundation",3306);
+ $conn = mysqli_connect("localhost","username","password","dbname",3306);
  if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
  } 
